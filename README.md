@@ -1,26 +1,28 @@
 # FWI_Prediction
 FWI Prediction
 
-Project Overview
+Project Overview:
 This project focuses on Full-Waveform Inversion (FWI), a geophysical technique used to estimate subsurface properties from seismic data. The repository provides a comprehensive workflow, including data processing, model training, and deployment setup, aimed at predicting subsurface characteristics.
 
-Features
+Features:
 Data Processing: Efficient preparation of seismic data for analysis.
-
 Machine Learning Models: Implementation of machine learning techniques for FWI.
-
 Visualization: Jupyter Notebooks for data visualization and model interpretation.
-
 Deployment Ready: Configurations for deploying the application using AWS Elastic Beanstalk.
 
-Directory Structure
 
+
+
+Directory Structure
 ├── notebook/        # Jupyter Notebooks for data processing and analysis
 ├── models/          # Pre-trained models and training scripts
 ├── templates/       # Template files (if any)
 ├── .ebextensions/   # AWS Elastic Beanstalk configuration files
 ├── application.py   # Main application file
 ├── requirements.txt # List of dependencies
+
+
+
 
 Installation
 Clone the repository:
