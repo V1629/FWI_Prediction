@@ -3,6 +3,7 @@ import pickle
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
+import os
 
 application=Flask(__name__)
 app=application
@@ -38,4 +39,8 @@ def predict_datapoint():
     
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
+    # Get port from environment variable (for production) or use 5000 for local development
+    port = int(os.environ.get('PORT', 5000))
+    # Use 0.0.0.0 for production, localhost for development
+    host = '0.0.0.0' if os.environ.get('PORT') else '127.0.0.1'
+    app.run(host=host, port=port, debug=False)

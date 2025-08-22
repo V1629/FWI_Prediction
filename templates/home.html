@@ -3,30 +3,592 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>predict_datapoint</title>
+    <title>FWI Prediction - Make Your Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <h1>FWI PREDICTION</h1>
-    <form action="{{url_for('predict_datapoint')}}" method="POST">
-        <input type="text" name="Temperature" placeholder="Temperature" required="required"/><br>
-        <input type="text" name="RH" placeholder="RH" required="required"/><br>
-        <input type="text" name="WS" placeholder="WS" required="required"/><br>
-        <input type="text" name="Rain" placeholder="Rain" required="required"/><br>
-        <input type="text" name="FFMC" placeholder="FFMC" required="required"/><br>
-        <input type="text" name="DMC" placeholder="DMC" required="required"/><br>
-        <input type="text" name="ISI" placeholder="ISI" required="required"/><br>
-        <input type="text" name="Classes" placeholder="Classes" required="required"/><br>
-        <input type="text" name="Region" placeholder="Region" required="required"/><br>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <a href="{{ url_for('index') }}" class="logo">
+                    <i class="fas fa-fire"></i>
+                    <span>FWI Prediction</span>
+                </a>
+                <nav class="nav">
+                    <a href="{{ url_for('index') }}" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        Home
+                    </a>
+                    <a href="{{ url_for('predict_datapoint') }}" class="nav-link active">
+                        <i class="fas fa-calculator"></i>
+                        Predict
+                    </a>
+                </nav>
+            </div>
+        </header>
 
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="prediction-container">
+                <!-- Form Section -->
+                <div class="form-section">
+                    <div class="form-header">
+                        <h1 class="form-title">
+                            <i class="fas fa-fire"></i>
+                            Forest Fire Risk Prediction
+                        </h1>
+                        <p class="form-subtitle">
+                            Enter the weather and environmental conditions to predict fire risk probability
+                        </p>
+                    </div>
 
+                    <form action="{{ url_for('predict_datapoint') }}" method="POST" class="prediction-form">
+                        <div class="form-grid">
+                            <!-- Temperature -->
+                            <div class="form-group">
+                                <label for="Temperature" class="form-label">
+                                    <i class="fas fa-thermometer-half"></i>
+                                    Temperature (°C)
+                                </label>
+                                <input type="number" 
+                                       id="Temperature" 
+                                       name="Temperature" 
+                                       class="form-input" 
+                                       placeholder="e.g., 25" 
+                                       step="0.1" 
+                                       min="-50" 
+                                       max="60" 
+                                       required>
+                                <div class="input-info">
+                                    <i class="fas fa-info-circle"></i>
+                                    Air temperature in Celsius. Higher temperatures increase fire risk.
+                                </div>
+                            </div>
 
+                            <!-- Relative Humidity -->
+                            <div class="form-group">
+                                <label for="RH" class="form-label">
+                                    <i class="fas fa-tint"></i>
+                                    Relative Humidity (%)
+                                </label>
+                                <input type="number" 
+                                       id="RH" 
+                                       name="RH" 
+                                       class="form-input" 
+                                       placeholder="e.g., 65" 
+                                       min="0" 
+                                       max="100" 
+                                       required>
+                                <div class="input-info">
+                                    <i class="fas fa-info-circle"></i>
+                                    Humidity percentage. Lower humidity increases fire risk.
+                                </div>
+                            </div>
 
-        <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
-    </form>
+                            <!-- Wind Speed -->
+                            <div class="form-group">
+                                <label for="WS" class="form-label">
+                                    <i class="fas fa-wind"></i>
+                                    Wind Speed (km/h)
+                                </label>
+                                <input type="number" 
+                                       id="WS" 
+                                       name="WS" 
+                                       class="form-input" 
+                                       placeholder="e.g., 15" 
+                                       min="0" 
+                                       max="100" 
+                                       required>
+                                <div class="input-info">
+                                    <i class="fas fa-info-circle"></i>
+                                    Wind speed in km/h. Higher wind speeds increase fire spread.
+                                </div>
+                            </div>
 
-<h2>
-    THE FWI PREDICTION IS  : {{results}}
-</h2>
-    
+                            <!-- Rainfall -->
+                            <div class="form-group">
+                                <label for="Rain" class="form-label">
+                                    <i class="fas fa-cloud-rain"></i>
+                                    Rainfall (mm)
+                                </label>
+                                <input type="number" 
+                                       id="Rain" 
+                                       name="Rain" 
+                                       class="form-input" 
+                                       placeholder="e.g., 0.5" 
+                                       step="0.1" 
+                                       min="0" 
+                                       max="100" 
+                                       required>
+                                <div class="input-info">
+                                    <i class="fas fa-info-circle"></i>
+                                    Precipitation in millimeters. Higher rainfall reduces fire risk.
+                                </div>
+                            </div>
+
+                            <!-- FFMC -->
+                            <div class="form-group">
+                                <label for="FFMC" class="form-label">
+                                    <i class="fas fa-leaf"></i>
+                                    FFMC (Fine Fuel Moisture Code)
+                                </label>
+                                <input type="number" 
+                                       id="FFMC" 
+                                       name="FFMC" 
+                                       class="form-input" 
+                                       placeholder="e.g., 75" 
+                                       step="0.1" 
+                                       min="0" 
+                                       max="100" 
+                                       required>
+                                <div class="input-info">
+                                    <i class="fas fa-info-circle"></i>
+                                    Fine fuel moisture code (0-100). Higher values indicate drier fuels.
+                                </div>
+                            </div>
+
+                            <!-- DMC -->
+                            <div class="form-group">
+                                <label for="DMC" class="form-label">
+                                    <i class="fas fa-tree"></i>
+                                    DMC (Duff Moisture Code)
+                                </label>
+                                <input type="number" 
+                                       id="DMC" 
+                                       name="DMC" 
+                                       class="form-input" 
+                                       placeholder="e.g., 25" 
+                                       step="0.1" 
+                                       min="0" 
+                                       max="300" 
+                                       required>
+                                <div class="input-info">
+                                    <i class="fas fa-info-circle"></i>
+                                    Duff moisture code (0-300+). Higher values indicate drier duff layer.
+                                </div>
+                            </div>
+
+                            <!-- ISI -->
+                            <div class="form-group">
+                                <label for="ISI" class="form-label">
+                                    <i class="fas fa-fire"></i>
+                                    ISI (Initial Spread Index)
+                                </label>
+                                <input type="number" 
+                                       id="ISI" 
+                                       name="ISI" 
+                                       class="form-input" 
+                                       placeholder="e.g., 8" 
+                                       step="0.1" 
+                                       min="0" 
+                                       max="56" 
+                                       required>
+                                <div class="input-info">
+                                    <i class="fas fa-info-circle"></i>
+                                    Initial spread index (0-56+). Higher values indicate faster fire spread.
+                                </div>
+                            </div>
+
+                            <!-- Classes -->
+                            <div class="form-group">
+                                <label for="Classes" class="form-label">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    Fire Class
+                                </label>
+                                <select id="Classes" name="Classes" class="form-input" required>
+                                    <option value="">Select fire class</option>
+                                    <option value="0">0 - No Fire</option>
+                                    <option value="1">1 - Fire Present</option>
+                                </select>
+                                <div class="input-info">
+                                    <i class="fas fa-info-circle"></i>
+                                    Current fire status. 0 for no fire, 1 for fire present.
+                                </div>
+                            </div>
+
+                            <!-- Region -->
+                            <div class="form-group">
+                                <label for="Region" class="form-label">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Region
+                                </label>
+                                <select id="Region" name="Region" class="form-input" required>
+                                    <option value="">Select region</option>
+                                    <option value="0">Region 0</option>
+                                    <option value="1">Region 1</option>
+                                </select>
+                                <div class="input-info">
+                                    <i class="fas fa-info-circle"></i>
+                                    Geographic region identifier for the prediction area.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary btn-large">
+                                <i class="fas fa-rocket"></i>
+                                Predict Fire Risk
+                            </button>
+                            <a href="{{ url_for('index') }}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i>
+                                Back to Home
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Results Section -->
+                {% if results is defined %}
+                <div class="results-section">
+                    <div class="results-card">
+                        <div class="results-header">
+                            <h2 class="results-title">
+                                <i class="fas fa-chart-line"></i>
+                                Prediction Results
+                            </h2>
+                        </div>
+                        <div class="results-content">
+                            <div class="result-item">
+                                <div class="result-label">Fire Risk Probability:</div>
+                                <div class="result-value">{{ "%.2f"|format(results) }}</div>
+                            </div>
+                            <div class="result-interpretation">
+                                <h4>Risk Level:</h4>
+                                {% if results < 0.3 %}
+                                    <div class="risk-level low">
+                                        <i class="fas fa-check-circle"></i>
+                                        Low Risk
+                                    </div>
+                                {% elif results < 0.7 %}
+                                    <div class="risk-level medium">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        Medium Risk
+                                    </div>
+                                {% else %}
+                                    <div class="risk-level high">
+                                        <i class="fas fa-fire"></i>
+                                        High Risk
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Parameter Analysis Section -->
+                            <div class="parameter-analysis">
+                                <h4><i class="fas fa-microscope"></i> Parameter Analysis</h4>
+                                <p class="analysis-description">
+                                    Below is a detailed breakdown of how each parameter contributes to the fire risk assessment:
+                                </p>
+                                
+                                <div class="parameter-breakdown">
+                                    <!-- Temperature Analysis -->
+                                    <div class="param-analysis-item">
+                                        <div class="param-header">
+                                            <i class="fas fa-thermometer-half"></i>
+                                            <span>Temperature: {{ request.form.get('Temperature', 'N/A') }}°C</span>
+                                        </div>
+                                        <div class="param-impact">
+                                            {% set temp = request.form.get('Temperature', 0) | float %}
+                                            {% if temp > 30 %}
+                                                <span class="impact high-impact">
+                                                    <i class="fas fa-arrow-up"></i>
+                                                    High Risk Factor
+                                                </span>
+                                                <p>High temperature ({{ temp }}°C) significantly increases fire risk as it dries out vegetation and fuels.</p>
+                                            {% elif temp > 20 %}
+                                                <span class="impact medium-impact">
+                                                    <i class="fas fa-arrow-up"></i>
+                                                    Moderate Risk Factor
+                                                </span>
+                                                <p>Moderate temperature ({{ temp }}°C) contributes to fire risk through fuel drying.</p>
+                                            {% else %}
+                                                <span class="impact low-impact">
+                                                    <i class="fas fa-arrow-down"></i>
+                                                    Low Risk Factor
+                                                </span>
+                                                <p>Lower temperature ({{ temp }}°C) reduces fire risk by maintaining moisture in fuels.</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Humidity Analysis -->
+                                    <div class="param-analysis-item">
+                                        <div class="param-header">
+                                            <i class="fas fa-tint"></i>
+                                            <span>Relative Humidity: {{ request.form.get('RH', 'N/A') }}%</span>
+                                        </div>
+                                        <div class="param-impact">
+                                            {% set rh = request.form.get('RH', 50) | float %}
+                                            {% if rh < 40 %}
+                                                <span class="impact high-impact">
+                                                    <i class="fas fa-arrow-up"></i>
+                                                    High Risk Factor
+                                                </span>
+                                                <p>Low humidity ({{ rh }}%) creates dry conditions that significantly increase fire risk.</p>
+                                            {% elif rh < 60 %}
+                                                <span class="impact medium-impact">
+                                                    <i class="fas fa-arrow-up"></i>
+                                                    Moderate Risk Factor
+                                                </span>
+                                                <p>Moderate humidity ({{ rh }}%) contributes to fire risk through reduced moisture.</p>
+                                            {% else %}
+                                                <span class="impact low-impact">
+                                                    <i class="fas fa-arrow-down"></i>
+                                                    Low Risk Factor
+                                                </span>
+                                                <p>High humidity ({{ rh }}%) reduces fire risk by maintaining moisture in the environment.</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Wind Speed Analysis -->
+                                    <div class="param-analysis-item">
+                                        <div class="param-header">
+                                            <i class="fas fa-wind"></i>
+                                            <span>Wind Speed: {{ request.form.get('WS', 'N/A') }} km/h</span>
+                                        </div>
+                                        <div class="param-impact">
+                                            {% set ws = request.form.get('WS', 10) | float %}
+                                            {% if ws > 25 %}
+                                                <span class="impact high-impact">
+                                                    <i class="fas fa-arrow-up"></i>
+                                                    High Risk Factor
+                                                </span>
+                                                <p>High wind speed ({{ ws }} km/h) dramatically increases fire spread potential and risk.</p>
+                                            {% elif ws > 15 %}
+                                                <span class="impact medium-impact">
+                                                    <i class="fas fa-arrow-up"></i>
+                                                    Moderate Risk Factor
+                                                </span>
+                                                <p>Moderate wind speed ({{ ws }} km/h) contributes to fire spread and risk.</p>
+                                            {% else %}
+                                                <span class="impact low-impact">
+                                                    <i class="fas fa-arrow-down"></i>
+                                                    Low Risk Factor
+                                                </span>
+                                                <p>Low wind speed ({{ ws }} km/h) reduces fire spread potential and overall risk.</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <!-- Rainfall Analysis -->
+                                    <div class="param-analysis-item">
+                                        <div class="param-header">
+                                            <i class="fas fa-cloud-rain"></i>
+                                            <span>Rainfall: {{ request.form.get('Rain', 'N/A') }} mm</span>
+                                        </div>
+                                        <div class="param-impact">
+                                            {% set rain = request.form.get('Rain', 0) | float %}
+                                            {% if rain < 1 %}
+                                                <span class="impact high-impact">
+                                                    <i class="fas fa-arrow-up"></i>
+                                                    High Risk Factor
+                                                </span>
+                                                <p>Low rainfall ({{ rain }} mm) creates dry conditions that significantly increase fire risk.</p>
+                                            {% elif rain < 5 %}
+                                                <span class="impact medium-impact">
+                                                    <i class="fas fa-arrow-up"></i>
+                                                    Moderate Risk Factor
+                                                </span>
+                                                <p>Moderate rainfall ({{ rain }} mm) provides limited moisture, still contributing to fire risk.</p>
+                                            {% else %}
+                                                <span class="impact low-impact">
+                                                    <i class="fas fa-arrow-down"></i>
+                                                    Low Risk Factor
+                                                </span>
+                                                <p>High rainfall ({{ rain }} mm) significantly reduces fire risk by saturating fuels.</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <!-- FFMC Analysis -->
+                                    <div class="param-analysis-item">
+                                        <div class="param-header">
+                                            <i class="fas fa-leaf"></i>
+                                            <span>FFMC: {{ request.form.get('FFMC', 'N/A') }}</span>
+                                        </div>
+                                        <div class="param-impact">
+                                            {% set ffmc = request.form.get('FFMC', 50) | float %}
+                                            {% if ffmc > 80 %}
+                                                <span class="impact high-impact">
+                                                    <i class="fas fa-arrow-up"></i>
+                                                    High Risk Factor
+                                                </span>
+                                                <p>High FFMC ({{ ffmc }}) indicates very dry fine fuels, creating extreme fire risk.</p>
+                                            {% elif ffmc > 60 %}
+                                                <span class="impact medium-impact">
+                                                    <i class="fas fa-arrow-up"></i>
+                                                    Moderate Risk Factor
+                                                </span>
+                                                <p>Moderate FFMC ({{ ffmc }}) indicates dry fine fuels, contributing to fire risk.</p>
+                                            {% else %}
+                                                <span class="impact low-impact">
+                                                    <i class="fas fa-arrow-down"></i>
+                                                    Low Risk Factor
+                                                </span>
+                                                <p>Low FFMC ({{ ffmc }}) indicates moist fine fuels, reducing fire risk.</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <!-- DMC Analysis -->
+                                    <div class="param-analysis-item">
+                                        <div class="param-header">
+                                            <i class="fas fa-tree"></i>
+                                            <span>DMC: {{ request.form.get('DMC', 'N/A') }}</span>
+                                        </div>
+                                        <div class="param-impact">
+                                            {% set dmc = request.form.get('DMC', 50) | float %}
+                                            {% if dmc > 100 %}
+                                                <span class="impact high-impact">
+                                                    <i class="fas fa-arrow-up"></i>
+                                                    High Risk Factor
+                                                </span>
+                                                <p>High DMC ({{ dmc }}) indicates very dry duff layer, creating extreme fire risk.</p>
+                                            {% elif dmc > 50 %}
+                                                <span class="impact medium-impact">
+                                                    <i class="fas fa-arrow-up"></i>
+                                                    Moderate Risk Factor
+                                                </span>
+                                                <p>Moderate DMC ({{ dmc }}) indicates dry duff layer, contributing to fire risk.</p>
+                                            {% else %}
+                                                <span class="impact low-impact">
+                                                    <i class="fas fa-arrow-down"></i>
+                                                    Low Risk Factor
+                                                </span>
+                                                <p>Low DMC ({{ dmc }}) indicates moist duff layer, reducing fire risk.</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <!-- ISI Analysis -->
+                                    <div class="param-analysis-item">
+                                        <div class="param-header">
+                                            <i class="fas fa-fire"></i>
+                                            <span>ISI: {{ request.form.get('ISI', 'N/A') }}</span>
+                                        </div>
+                                        <div class="param-impact">
+                                            {% set isi = request.form.get('ISI', 10) | float %}
+                                            {% if isi > 20 %}
+                                                <span class="impact high-impact">
+                                                    <i class="fas fa-arrow-up"></i>
+                                                    High Risk Factor
+                                                </span>
+                                                <p>High ISI ({{ isi }}) indicates very fast fire spread potential, creating extreme risk.</p>
+                                            {% elif isi > 10 %}
+                                                <span class="impact medium-impact">
+                                                    <i class="fas fa-arrow-up"></i>
+                                                    Moderate Risk Factor
+                                                </span>
+                                                <p>Moderate ISI ({{ isi }}) indicates moderate fire spread potential, contributing to risk.</p>
+                                            {% else %}
+                                                <span class="impact low-impact">
+                                                    <i class="fas fa-arrow-down"></i>
+                                                    Low Risk Factor
+                                                </span>
+                                                <p>Low ISI ({{ isi }}) indicates slow fire spread potential, reducing overall risk.</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Summary Analysis -->
+                                <div class="summary-analysis">
+                                    <h4><i class="fas fa-chart-pie"></i> Risk Factor Summary</h4>
+                                    <div class="risk-factors">
+                                        {% set high_risk_count = 0 %}
+                                        {% set medium_risk_count = 0 %}
+                                        {% set low_risk_count = 0 %}
+                                        
+                                        {% if (request.form.get('Temperature', 0) | float) > 30 %}{% set high_risk_count = high_risk_count + 1 %}{% endif %}
+                                        {% if (request.form.get('RH', 50) | float) < 40 %}{% set high_risk_count = high_risk_count + 1 %}{% endif %}
+                                        {% if (request.form.get('WS', 10) | float) > 25 %}{% set high_risk_count = high_risk_count + 1 %}{% endif %}
+                                        {% if (request.form.get('Rain', 0) | float) < 1 %}{% set high_risk_count = high_risk_count + 1 %}{% endif %}
+                                        {% if (request.form.get('FFMC', 50) | float) > 80 %}{% set high_risk_count = high_risk_count + 1 %}{% endif %}
+                                        {% if (request.form.get('DMC', 50) | float) > 100 %}{% set high_risk_count = high_risk_count + 1 %}{% endif %}
+                                        {% if (request.form.get('ISI', 10) | float) > 20 %}{% set high_risk_count = high_risk_count + 1 %}{% endif %}
+
+                                        <div class="risk-factor-item high">
+                                            <span class="factor-count">{{ high_risk_count }}</span>
+                                            <span class="factor-label">High Risk Factors</span>
+                                        </div>
+                                        <div class="risk-factor-item medium">
+                                            <span class="factor-count">{{ medium_risk_count }}</span>
+                                            <span class="factor-label">Medium Risk Factors</span>
+                                        </div>
+                                        <div class="risk-factor-item low">
+                                            <span class="factor-count">{{ low_risk_count }}</span>
+                                            <span class="factor-label">Low Risk Factors</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="analysis-conclusion">
+                                        <h5>Analysis Conclusion:</h5>
+                                        {% if high_risk_count >= 4 %}
+                                            <p class="conclusion high-risk">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                                <strong>Critical Fire Risk:</strong> Multiple high-risk factors indicate extremely dangerous conditions. 
+                                                Immediate action is required to prevent fire outbreaks.
+                                            </p>
+                                        {% elif high_risk_count >= 2 %}
+                                            <p class="conclusion medium-risk">
+                                                <i class="fas fa-exclamation-circle"></i>
+                                                <strong>Elevated Fire Risk:</strong> Several high-risk factors suggest dangerous conditions. 
+                                                Enhanced monitoring and fire prevention measures are recommended.
+                                            </p>
+                                        {% else %}
+                                            <p class="conclusion low-risk">
+                                                <i class="fas fa-check-circle"></i>
+                                                <strong>Controlled Fire Risk:</strong> Most parameters indicate manageable conditions. 
+                                                Continue standard monitoring and prevention protocols.
+                                            </p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="recommendations">
+                                <h4>Recommendations:</h4>
+                                <ul>
+                                    {% if results < 0.3 %}
+                                        <li>Continue normal monitoring</li>
+                                        <li>Maintain current fire prevention measures</li>
+                                        <li>Regular patrols and equipment checks</li>
+                                    {% elif results < 0.7 %}
+                                        <li>Increase monitoring frequency</li>
+                                        <li>Prepare fire response teams</li>
+                                        <li>Consider fire restrictions</li>
+                                        <li>Alert local communities</li>
+                                    {% else %}
+                                        <li>High alert - immediate action required</li>
+                                        <li>Deploy fire response teams</li>
+                                        <li>Implement strict fire restrictions</li>
+                                        <li>Evacuate if necessary</li>
+                                        <li>Coordinate with emergency services</li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-fire"></i>
+                    <span>FWI Prediction</span>
+                </div>
+                <p>&copy; 2024 FWI Prediction System. Advanced forest fire risk assessment powered by machine learning.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
 </body>
 </html>

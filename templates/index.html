@@ -1,1 +1,167 @@
-<h1>Welcome to the home page</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FWI Prediction - Forest Fire Weather Index</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <div class="hero-content">
+                <div class="logo">
+                    <i class="fas fa-fire"></i>
+                    <span>FWI Prediction</span>
+                </div>
+                <h1 class="hero-title">
+                    Forest Fire Weather Index
+                    <span class="highlight">Prediction System</span>
+                </h1>
+                <p class="hero-description">
+                    Advanced machine learning system to predict forest fire risk based on weather conditions and environmental factors.
+                    Get accurate predictions to help prevent and manage forest fires.
+                </p>
+                <div class="hero-buttons">
+                    <a href="{{ url_for('predict_datapoint') }}" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i>
+                        Start Prediction
+                    </a>
+                    <a href="#features" class="btn btn-secondary">
+                        <i class="fas fa-info-circle"></i>
+                        Learn More
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-elements">
+                    <div class="element element-1">
+                        <i class="fas fa-thermometer-half"></i>
+                    </div>
+                    <div class="element element-2">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                    <div class="element element-3">
+                        <i class="fas fa-cloud-rain"></i>
+                    </div>
+                    <div class="element element-4">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <h2 class="section-title">How It Works</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Data Collection</h3>
+                    <p>Collect weather and environmental data including temperature, humidity, wind speed, and moisture codes.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>AI Analysis</h3>
+                    <p>Our advanced Ridge Regression model analyzes the data to predict fire risk probability.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Risk Assessment</h3>
+                    <p>Get accurate predictions and risk assessments to make informed decisions about fire prevention.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Parameters Section -->
+        <section class="parameters">
+            <h2 class="section-title">Input Parameters</h2>
+            <div class="parameters-grid">
+                <div class="parameter-card">
+                    <div class="parameter-icon">
+                        <i class="fas fa-thermometer-half"></i>
+                    </div>
+                    <h4>Temperature</h4>
+                    <p>Air temperature in Celsius (°C)</p>
+                </div>
+                <div class="parameter-card">
+                    <div class="parameter-icon">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <h4>Relative Humidity</h4>
+                    <p>Humidity percentage (%)</p>
+                </div>
+                <div class="parameter-card">
+                    <div class="parameter-icon">
+                        <i class="fas fa-wind"></i>
+                    </div>
+                    <h4>Wind Speed</h4>
+                    <p>Wind speed in kilometers per hour (km/h)</p>
+                </div>
+                <div class="parameter-card">
+                    <div class="parameter-icon">
+                        <i class="fas fa-cloud-rain"></i>
+                    </div>
+                    <h4>Rainfall</h4>
+                    <p>Precipitation in millimeters (mm)</p>
+                </div>
+                <div class="parameter-card">
+                    <div class="parameter-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h4>FFMC</h4>
+                    <p>Fine Fuel Moisture Code (0-100 scale)</p>
+                </div>
+                <div class="parameter-card">
+                    <div class="parameter-icon">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <h4>DMC</h4>
+                    <p>Duff Moisture Code (0-300+ scale)</p>
+                </div>
+                <div class="parameter-card">
+                    <div class="parameter-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h4>ISI</h4>
+                    <p>Initial Spread Index (0-56+ scale)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta">
+            <div class="cta-content">
+                <h2>Ready to Predict Fire Risk?</h2>
+                <p>Start using our advanced prediction system to protect forests and communities.</p>
+                <a href="{{ url_for('predict_datapoint') }}" class="btn btn-primary btn-large">
+                    <i class="fas fa-play"></i>
+                    Get Started Now
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-fire"></i>
+                    <span>FWI Prediction</span>
+                </div>
+                <p>&copy; 2024 FWI Prediction System. Advanced forest fire risk assessment powered by machine learning.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
+</body>
+</html>
