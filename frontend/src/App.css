@@ -1,0 +1,193 @@
+.map-sheet {
+  max-width: 800px;
+  margin: 40px auto;
+  background-color: var(--paper);
+  border: 2px solid var(--contour-brown);
+  border-left: 4px solid var(--active-risk-color);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.contour-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 200px;
+  pointer-events: none;
+  opacity: 0.1;
+  z-index: -1;
+  stroke: var(--contour-brown);
+  fill: none;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawContour 3s ease-out forwards;
+}
+
+@keyframes drawContour {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.title-block {
+  border-bottom: 2px solid var(--contour-brown);
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.sheet-title {
+  font-size: 24px;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.result-stamp {
+  font-size: 20px;
+  color: var(--active-risk-color);
+  border: 2px solid currentColor;
+  padding: 4px 12px;
+  transform: rotate(-2deg);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.result-stamp.visible {
+  opacity: 1;
+}
+
+.section {
+  position: relative;
+  border-bottom: 1px solid var(--contour-brown);
+  padding: 32px 16px;
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
+.benchmark-marker {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  font-size: 12px;
+  color: var(--contour-brown);
+}
+
+.grid-ref {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+  font-size: 10px;
+  color: var(--contour-brown);
+  opacity: 0.7;
+}
+
+.field-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 16px;
+}
+
+.field-row:last-child {
+  margin-bottom: 0;
+}
+
+.field-label {
+  width: 150px;
+  font-weight: 600;
+}
+
+.field-input {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed var(--contour-brown);
+  padding: 8px 4px;
+  font-size: 16px;
+  color: var(--ink);
+  outline: none;
+}
+
+.field-input:focus {
+  border-bottom: 1px solid var(--contour-brown);
+}
+
+.slider-container {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  background: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 16px;
+  width: 8px;
+  background: var(--contour-brown);
+  cursor: pointer;
+  margin-top: -6px;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  cursor: pointer;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--contour-brown),
+    var(--contour-brown) 1px,
+    transparent 1px,
+    transparent 10%
+  );
+  border-bottom: 1px solid var(--contour-brown);
+}
+
+select.field-input {
+  appearance: none;
+  cursor: pointer;
+  border-bottom: 1px solid var(--contour-brown);
+}
+
+button.submit-btn {
+  background-color: var(--active-risk-color);
+  color: var(--paper);
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background-color 0.2s;
+  display: block;
+  width: 100%;
+  margin-top: 24px;
+}
+
+button.submit-btn:hover {
+  background-color: var(--ink);
+}
+
+button.submit-btn:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: var(--risk-high);
+  margin-top: 16px;
+  font-size: 14px;
+}
