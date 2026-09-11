@@ -1,0 +1,26 @@
+# Git
+.git/
+.gitignore
+
+# Dependencies
+node_modules/
+env/
+venv/
+.env/
+__pycache__/
+
+# Python
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+
+# Frontend builds
+frontend/dist/
+frontend/build/
+
+# OS/IDE
+.DS_Store
+.idea/
+.vscode/

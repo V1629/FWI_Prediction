@@ -26,193 +26,103 @@ The system analyzes these critical parameters:
 | **Classes** | Current fire status | 0 or 1 | Binary classification |
 | **Region** | Geographic identifier | 0 or 1 | Regional factors |
 
-### 🧠 Intelligent Risk Assessment
-- **Multi-factor Analysis**: Each parameter contributes to overall risk calculation
-- **Risk Level Classification**: Low, Medium, High risk categorization
-- **Parameter Impact Analysis**: Detailed breakdown of how each factor affects prediction
-- **Actionable Recommendations**: Specific fire prevention measures based on risk level
-
 ## 🏗️ Technical Architecture
 
-### Backend Technologies
-- **Flask**: Lightweight web framework for API and web interface
-- **Scikit-learn**: Machine learning library for Ridge Regression
-- **NumPy & Pandas**: Data manipulation and numerical computing
-- **Pickle**: Model serialization for production deployment
-- **Gunicorn**: Production WSGI server for deployment
+### Tech Stack
+- **Backend**: FastAPI (Python) - High performance asynchronous API
+- **Frontend**: React + Vite - Fast, modern UI with React Router
+- **Machine Learning**: Scikit-learn, NumPy, Pandas
+- **Infrastructure**: Docker & Docker Compose for seamless containerized deployment
 
 ### Machine Learning Pipeline
 ```
 Input Data → Preprocessing → Feature Scaling → Ridge Regression → Risk Prediction
 ```
 
-### Model Performance
-- **Algorithm**: Ridge Regression with Cross-Validation
-- **Training Data**: Algerian Forest Fires Dataset
-- **Features**: 9 environmental parameters
-- **Output**: Fire risk probability (0-1 scale)
-- **Validation**: Cross-validation for model reliability
-
 ## 📁 Project Structure
 ```
 FWI_Prediction/
-├── application.py          # Main Flask application
-├── models/                 # Pre-trained ML models
-│   ├── ridgecv.pkl        # Ridge Regression model
-│   └── scaler.pkl         # Data standardization scaler
-├── static/                 # Static assets (CSS, JS)
-├── templates/              # HTML templates
-├── notebook/               # Jupyter notebooks for analysis
-│   ├── Ridge and lasso regression.ipynb
-│   └── Algerian_forest_fires_dataset.csv
-├── requirements.txt        # Python dependencies
-└── README.md              # Project documentation
+├── backend/                # FastAPI backend service
+│   ├── models/             # Pre-trained ML models (ridgecv.pkl, scaler.pkl)
+│   ├── main.py             # Main FastAPI application
+│   ├── Dockerfile          # Backend container configuration
+│   └── requirements.txt    # Python dependencies
+├── frontend/               # React + Vite frontend application
+│   ├── src/                # React components and pages
+│   ├── index.html          # Application entry point
+│   ├── Dockerfile          # Frontend container configuration (Multi-stage Nginx)
+│   └── package.json        # Node dependencies
+├── docker-compose.yml      # Docker orchestration
+└── README.md               # Project documentation
 ```
 
-## 🚀 Quick Start
+## 🚀 Quick Start (Recommended)
+
+The easiest way to run the application is using Docker.
 
 ### Prerequisites
-- Python 3.8+
-- pip package manager
-- Git
+- Docker and Docker Compose
 
-### Local Development Setup
-
+### Run with Docker
 1. **Clone the repository**
    ```bash
    git clone https://github.com/V1629/FWI_Prediction.git
    cd FWI_Prediction
    ```
 
-2. **Create virtual environment**
+2. **Build and start the containers**
    ```bash
-   python -m venv env
-   source env/bin/activate  # On Windows: env\Scripts\activate
+   docker-compose up --build
    ```
 
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+3. **Access the application**
+   - Web Interface: `http://localhost` (or `http://127.0.0.1`)
+   - API Backend: `http://localhost:8000`
 
-4. **Run the application**
-   ```bash
-   python application.py
-   ```
+---
 
-5. **Access the application**
-   - Open browser: `http://localhost:5000`
-   - Home page: Overview and parameter explanations
-   - Prediction form: `/predictdata` route
+## 🛠️ Local Development Setup (Without Docker)
+
+### Backend Setup
+```bash
+cd backend
+python -m venv env
+source env/bin/activate  # On Windows: env\Scripts\activate
+pip install -r requirements.txt
+uvicorn main:app --reload --port 8000
+```
+
+### Frontend Setup (In a separate terminal)
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
 ## 🎯 Usage Guide
 
 ### Web Interface
-1. **Navigate to prediction form** (`/predictdata`)
-2. **Enter environmental parameters** with proper ranges
-3. **Submit for analysis** - ML model processes inputs
-4. **Review results** - Risk probability and detailed analysis
-5. **Get recommendations** - Actionable fire prevention advice
+1. **Navigate to the home page**
+2. **Click "Start Prediction"** to go to the prediction form
+3. **Enter environmental parameters** with proper ranges
+4. **Submit for analysis** - React sends data to the FastAPI backend
+5. **Review results** - View your risk probability and detailed analysis directly on the page
 
 ### API Endpoints
-- **GET** `/` - Landing page with project information
-- **GET** `/predictdata` - Display prediction form
-- **POST** `/predictdata` - Submit data and get prediction results
+- **POST** `/api/predict` - Submit JSON data and get prediction results
 
-### Input Validation
-The system includes comprehensive input validation:
-- **Range checking** for all numerical parameters
-- **Real-time validation** with helpful error messages
-- **Data type verification** for form inputs
-- **Fallback handling** for edge cases
-
-## 🔧 Development
-
-### Model Training
-The ML models were trained using the Algerian Forest Fires Dataset:
-- **Dataset**: 245 samples with environmental parameters
-- **Features**: 9 input parameters for fire risk prediction
-- **Target**: Binary fire classification (fire/no fire)
-- **Preprocessing**: Data cleaning, standardization, and feature scaling
-
-### Adding New Features
-1. **Modify `application.py`** for new routes
-2. **Update templates** for UI changes
-3. **Add validation** in the prediction logic
-4. **Test locally** before deployment
-
-### Testing
+**Test prediction endpoint:**
 ```bash
-# Test the application locally
-python application.py
-
-# Test prediction endpoint
-curl -X POST http://localhost:5000/predictdata \
-  -d "Temperature=25&RH=65&WS=15&Rain=0&FFMC=75&DMC=25&ISI=8&Classes=0&Region=0"
+curl -X POST http://localhost:8000/api/predict \
+  -H "Content-Type: application/json" \
+  -d '{"Temperature":25, "RH":65, "WS":15, "Rain":0, "FFMC":75, "DMC":25, "ISI":8, "Classes":0, "Region":0}'
 ```
 
-
-### Environment Variables
-For production deployment, consider setting:
-- `FLASK_ENV=production`
-- `DEBUG=False`
-- Custom port configurations
-
 ## 📊 Model Performance & Validation
-
-### Training Metrics
-- **Cross-validation**: Ensures model reliability
-- **Feature importance**: All 9 parameters contribute to prediction
-- **Data quality**: Cleaned and validated dataset
-
-### Prediction Accuracy
 The Ridge Regression model provides:
 - **Stable predictions** with regularization
 - **Generalization** to new environmental conditions
 - **Interpretable results** with risk factor analysis
 
-## 🤝 Contributing
-
-### Development Workflow
-1. **Fork the repository**
-2. **Create feature branch**: `git checkout -b feature/new-feature`
-3. **Make changes** and test locally
-4. **Commit changes**: `git commit -m "Add new feature"`
-5. **Push to branch**: `git push origin feature/new-feature`
-6. **Create Pull Request**
-
-### Areas for Improvement
-- **Additional ML algorithms** (Random Forest, Neural Networks)
-- **More environmental parameters** (soil moisture, vegetation type)
-- **Real-time data integration** (weather APIs)
-- **Mobile application** development
-- **API rate limiting** and authentication
-
 ## 📄 License
 This project is open source and available under the MIT License.
-
-## 🙏 Acknowledgments
-- **Dataset**: Algerian Forest Fires Dataset
-- **ML Framework**: Scikit-learn community
-- **Web Framework**: Flask development team
-- **Deployment**: Render platform
-
-## 📞 Support & Issues
-- **GitHub Issues**: Report bugs and feature requests
-- **Documentation**: Check this README and code comments
-- **Community**: Contribute to improve the project
-
-## 🔮 Future Enhancements
-- **Real-time weather data integration**
-- **Multiple ML model ensemble**
-- **Geographic risk mapping**
-- **Mobile application**
-- **API authentication and rate limiting**
-- **Advanced visualization dashboards**
-
----
-
-**Built with ❤️ for forest fire prevention and community safety**
-
-*This project demonstrates the power of machine learning in environmental protection and fire risk assessment.*
-
